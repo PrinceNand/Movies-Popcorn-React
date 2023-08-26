@@ -63,17 +63,17 @@ function App() {
       </Navbar>
       <Main>
         {/* children instead prop drilling */}
-        {/* <Box>
+        <Box>
           <MoviesList movies={movies} />
-        </Box> */}
+        </Box>
         {/* <WatchedBox /> */}
-        {/* <Box>
+        <Box>
           <WatchedSummary watched={watched} />
           <WatchedMovieList watched={watched} />
-        </Box> */}
+        </Box>
 
         {/* element instead children or prop drilling ...alternative*/}
-        <Box element={<MoviesList movies={movies} />} />
+        {/* <Box element={<MoviesList movies={movies} />} />
         <Box
           element={
             <>
@@ -81,7 +81,7 @@ function App() {
               <WatchedMovieList watched={watched} />
             </>
           }
-        />
+        /> */}
       </Main>
     </>
   );
@@ -130,14 +130,14 @@ function Main({ children }) {
   );
 }
 
-function Box({ element }) {
+function Box({ children }) {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div className="box">
       <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
         {isOpen ? "–" : "+"}
       </button>
-      {isOpen && element}
+      {isOpen && children}
     </div>
   );
 }
