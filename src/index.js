@@ -9,5 +9,6 @@ root.render(
   <React.StrictMode>
     {/* <App /> */}
     <StartRating maxLength={10} />
+    <StartRating maxLength={10} color="red" size="30" />
   </React.StrictMode>
 );
