@@ -2,13 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 // import App from "./App";
-import StartRating from "./StarRating";
+import StarRating from "./StarRating";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     {/* <App /> */}
-    <StartRating maxLength={10} />
-    <StartRating maxLength={10} color="red" size="30" />
+    <StarRating maxLength={10} />
+    <StarRating maxLength={10} color="red" size="30" />
+    <StarRating
+      maxLength={5}
+      messages={["Terrible", "Bad", "Okay", "Good", "Amazing"]}
+    />
   </React.StrictMode>
 );

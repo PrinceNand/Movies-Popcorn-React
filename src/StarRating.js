@@ -15,6 +15,7 @@ export default function StartRating({
   maxLength = 5,
   color = "#fcc419",
   size = "48",
+  messages = [],
 }) {
   const textStyle = {
     lineHieight: "0",
@@ -44,7 +45,11 @@ export default function StartRating({
           />
         ))}
       </div>
-      <p style={textStyle}>{tempRating || rating}</p>
+      <p style={textStyle}>
+        {messages.length === maxLength
+          ? messages[tempRating ? tempRating - 1 : rating - 1]
+          : tempRating || rating || ""}
+      </p>
     </div>
   );
 }
