@@ -1,5 +1,5 @@
 import "./App.css";
-import { Children, useState } from "react";
+import { Children, useEffect, useState } from "react";
 
 const tempMovieData = [
   {
@@ -48,12 +48,37 @@ const tempWatchedData = [
   },
 ];
 
+const KEY = "d956458f";
+
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const query = "Iron Man";
+
+  // fetch without useEffects made the API load many times and make the network heavy
+  // fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=interstellar`)
+  //   .then((res) => res.json())
+  //   .then((data) => setMovies(data.Search));
+
+  useEffect(function () {
+    async function fetchMovie() {
+      setIsLoading(true);
+      const res = await fetch(
+        `http://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=${query}`
+      );
+      const data = await res.json();
+      setMovies(data.Search);
+      console.log(data.Search);
+      setIsLoading(false);
+    }
+    fetchMovie();
+  }, []);
+
   return (
     <>
       <Navbar>
@@ -63,9 +88,7 @@ function App() {
       </Navbar>
       <Main>
         {/* children instead prop drilling */}
-        <Box>
-          <MoviesList movies={movies} />
-        </Box>
+        <Box>{isLoading ? <Loader /> : <MoviesList movies={movies} />}</Box>
         {/* <WatchedBox /> */}
         <Box>
           <WatchedSummary watched={watched} />
@@ -85,6 +108,10 @@ function App() {
       </Main>
     </>
   );
+}
+
+function Loader() {
+  return <p className="loader">Loading...</p>;
 }
 
 function Navbar({ children }) {
